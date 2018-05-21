@@ -16,8 +16,9 @@ API_KEY_FILE = '.apikey'
 def get_root_logger():
 
     rootLogger = logging.getLogger()
+    rootLogger.setLevel(logging.INFO)
     
-    logFormatter = logging.Formatter("{asctime} [{levelname:8}] [{filename}:{lineno}] {message}]")
+    logFormatter = logging.Formatter("{asctime} {levelname} [{filename}:{lineno}] {message}", "%d.%m.%Y %H:%M:%S", style="{")
     
     logFileName = get_file_name_without_ext(__file__)+".log"
     
@@ -25,7 +26,7 @@ def get_root_logger():
     fileHandler.setFormatter(logFormatter)
     rootLogger.addHandler(fileHandler)
 
-    consoleHandler = logging.StreamHandler()
+    consoleHandler = logging.StreamHandler(sys.stdout)
     consoleHandler.setFormatter(logFormatter)
     rootLogger.addHandler(consoleHandler)
     
